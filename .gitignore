@@ -35,3 +35,4 @@ out/
 bin/
 
 application-local.properties
+package-lock.json
