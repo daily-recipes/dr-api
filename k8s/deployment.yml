@@ -1,0 +1,76 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: recipes-api
+  namespace: daily-recipes
+  labels:
+    k8s-app: recipes-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: recipes-api
+  template:
+    metadata:
+      name: recipes-api
+      labels:
+        k8s-app: recipes-api
+    spec:
+      containers:
+        - name: recipes-api
+          image: 'localhost:5000/recipes-service:0.8'
+          #image: 'elio2004/recipes-service:0.8'
+          ports:
+          - containerPort: 8081
+          resources:
+              limits:
+                memory: 1024Mi
+                cpu: "1"
+          securityContext:
+            privileged: false
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: db-config
+          env:
+          - name: server.port
+            value: "8081"
+          - name: spring.datasource.username
+            valueFrom:
+              secretKeyRef:
+                name: db-config-access
+                key: spring.datasource.username
+          - name: spring.datasource.password
+            valueFrom:
+              secretKeyRef:
+                name: db-config-access
+                key: spring.datasource.password
+          - name: spring.security.oauth2.client.registration.google.client-id
+            valueFrom:
+              secretKeyRef:
+                name: svc-auth-config
+                key: spring.security.oauth2.client.registration.google.client-id
+          - name: spring.security.oauth2.client.registration.google.client-secret
+            valueFrom:
+              secretKeyRef:
+                name: svc-auth-config
+                key: spring.security.oauth2.client.registration.google.client-secret
+          livenessProbe:
+            httpGet:
+              path: /manage/health/liveness
+              port: 8081
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 6
+          readinessProbe:
+            httpGet:
+              path: /manage/health/readiness
+              port: 8081
+            initialDelaySeconds: 5
+            timeoutSeconds: 3
+            periodSeconds: 5
+      initContainers:
+        - name: init-backend
+          image: busybox
+          command: ['sh', '-c', 'until nslookup postgres; do echo waiting for postgres; sleep 2; done;']
+      restartPolicy: Always

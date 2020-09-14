@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: recipes-api
+  namespace: daily-recipes
+  labels:
+    k8s-app: recipes-api
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8081
+  selector:
+    k8s-app: recipes-api

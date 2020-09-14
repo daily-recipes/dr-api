@@ -1,0 +1,20 @@
+# https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/
+kind: Ingress
+apiVersion: networking.k8s.io/v1beta1
+metadata:
+  name: recipes-api-local
+  namespace: daily-recipes
+  labels:
+    k8s-app: recipes-api
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+  - host: yummy
+    http:
+      paths:
+      - path: /(.*)
+        backend:
+          serviceName: recipes-api
+          servicePort: 8081
+        
