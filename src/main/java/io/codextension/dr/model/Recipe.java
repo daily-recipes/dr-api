@@ -26,37 +26,37 @@ import lombok.Setter;
 @Table(name = "recipe")
 @Data
 @EqualsAndHashCode(callSuper = true)
-@NamedQuery(name = "Recipe.findRecipesByFamilyMember",
-  query = "select r from Recipe r join r.belongsTo f join f.members m where m.id= :memberId")
+@NamedQuery(name = "Recipe.findRecipesByFamilyMember", query = "select r from Recipe r join r.belongsTo f join f.members m where m.id= :memberId")
+@NamedQuery(name = "Recipe.findRecipeByFamilyMember", query = "select r from Recipe r join r.belongsTo f join f.members m where m.id= :memberId and r.id= :recipeId")
 public class Recipe extends AbstractPersistable<Long> {
 
-    private String name;
+  private String name;
 
-    private int duration;
+  private int duration;
 
-    private String notes;
+  private String notes;
 
-    @ElementCollection(targetClass = String.class)
-    private List<String> tags;
+  @ElementCollection(targetClass = String.class)
+  private List<String> tags;
 
-    @ElementCollection(targetClass = String.class)
-    private List<String> instructions;
+  @ElementCollection(targetClass = String.class)
+  private List<String> instructions;
 
-    @ManyToMany
-    @JoinTable(name = "RECIPE_INGREDIENT", joinColumns = @JoinColumn(name = "RECIPE_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "INGREDIENT_ID", referencedColumnName = "ID"))
-    private List<Ingredient> ingredients;
+  @ManyToMany
+  @JoinTable(name = "RECIPE_INGREDIENT", joinColumns = @JoinColumn(name = "RECIPE_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "INGREDIENT_ID", referencedColumnName = "ID"))
+  private List<Ingredient> ingredients;
 
-    private String imageUrl;
+  private String imageUrl;
 
-    private int servings;
+  private int servings;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "family_id", referencedColumnName = "id")
-    private Family belongsTo;
+  @JsonIgnore
+  @ManyToOne
+  @JoinColumn(name = "family_id", referencedColumnName = "id")
+  private Family belongsTo;
 
-    @Setter(value = AccessLevel.NONE)
-    @Version
-    @Column(name = "VERSIONNB")
-    private int version;
+  @Setter(value = AccessLevel.NONE)
+  @Version
+  @Column(name = "VERSIONNB")
+  private int version;
 }

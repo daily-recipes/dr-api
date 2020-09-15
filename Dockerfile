@@ -1,3 +1,4 @@
+# minikube start --insecure-registry="pc:5000"
 # 1. docker build api -t recipes-service:0.8
 # 2. docker tag recipes-service:0.8 elio2004/recipes-service:0.8
 # 3. docker push elio2004/recipes-service:0.8
