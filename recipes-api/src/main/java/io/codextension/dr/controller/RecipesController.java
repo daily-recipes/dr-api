@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import io.codextension.dr.model.Recipe;
 import io.codextension.dr.repository.RecipeRepository;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.*;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
-@Api(tags = "Recipes", description = "Information related to the recipes", produces = "application/json", protocols = "https,http", authorizations = @Authorization(value = "", scopes = {
-        @AuthorizationScope(scope = "read", description = "lalala") }))
+@Api(tags = "Recipes", description = "Information related to the recipes", produces = "application/json")
 @RestController
 @CrossOrigin
 public class RecipesController {
