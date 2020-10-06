@@ -24,10 +24,6 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = true)
 public class Member extends AbstractPersistable<String> {
 
-    private String email;
-
-    private String name;
-
     @JsonIgnore
     @ManyToMany(mappedBy = "members")
     private List<Family> memberOf;
