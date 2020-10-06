@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
 import springfox.documentation.builders.HttpAuthenticationBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -24,7 +25,7 @@ public class DailyRecipesApiApplication extends SpringBootServletInitializer {
 		Set<String> protocols = new HashSet<>();
 		protocols.add("https");
 
-		return new Docket(DocumentationType.SWAGGER_2).select()
+		return new Docket(DocumentationType.OAS_30).select()
 				.apis(RequestHandlerSelectors.basePackage("io.codextension.dr")).paths(PathSelectors.any()).build()
 				.apiInfo(apiInfo()).protocols(protocols).servers(new Server("yalla.run", "https://yalla.run",
 						"The yalla server", new HashSet<>(), new ArrayList<>()))
