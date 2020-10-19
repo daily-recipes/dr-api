@@ -20,6 +20,10 @@ import springfox.documentation.spring.web.plugins.Docket;
 @EnableJpaRepositories(basePackages = {"io.codextension.dr.repository"})
 public class DailyRecipesApiApplication extends SpringBootServletInitializer {
 
+    private static final String AUTH_PROVIDER = "GoogleAuth";
+    private static final HttpAuthenticationBuilder JWT_BEARER_BUILDER = new HttpAuthenticationBuilder().scheme("bearer")
+            .bearerFormat("JWT").name(AUTH_PROVIDER).description("Access token authentication based on JWT");
+
     @Bean
     public Docket productApi() {
         Set<String> protocols = new HashSet<>();
@@ -34,17 +38,8 @@ public class DailyRecipesApiApplication extends SpringBootServletInitializer {
 
     }
 
-    private SecurityScheme httpAuthentication() {
-        HttpAuthenticationBuilder JWT_BEARER_BUILDER = new HttpAuthenticationBuilder()
-                .scheme("bearer")
-                .bearerFormat("JWT")
-                .name("GoogleAuth")
-                .description("Access token authentication based on JWT");
-        return JWT_BEARER_BUILDER.build();
-    }
-
     private ApiKey apiKey() {
-        return new ApiKey("GoogleAuth", "Authorization", "header");
+        return new ApiKey(AUTH_PROVIDER, "Authorization", "header");
     }
 
     private SecurityContext securityContext() {
@@ -55,7 +50,8 @@ public class DailyRecipesApiApplication extends SpringBootServletInitializer {
 
     private List<SecurityReference> securityReferences() {
         return Collections.singletonList(
-                new SecurityReference("GoogleAuth", new AuthorizationScope[]{new AuthorizationScope("email", "email and Profile access")}));
+                new SecurityReference(AUTH_PROVIDER,
+                        new AuthorizationScope[] { new AuthorizationScope("email", "email and Profile access") }));
     }
 
     private ApiInfo apiInfo() {
