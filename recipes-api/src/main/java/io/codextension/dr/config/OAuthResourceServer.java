@@ -42,7 +42,7 @@ public class OAuthResourceServer implements ResourceServerConfigurer {
         http.httpBasic().disable().formLogin(AbstractHttpConfigurer::disable).csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(authorizeRequests -> authorizeRequests
                         .mvcMatchers("/manage/health/readiness", "/manage/health/liveness", "manage/health/ping")
-                        .permitAll().anyRequest().authenticated())
+                        .permitAll().anyRequest().permitAll())
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 }

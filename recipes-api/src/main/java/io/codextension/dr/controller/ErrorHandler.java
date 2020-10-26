@@ -5,11 +5,11 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
@@ -24,8 +24,8 @@ public class ErrorHandler {
         return new ResponseEntity<>(NOT_FOUND);
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    protected ResponseEntity<NotFoundException> handle(NotFoundException e) {
+    @ExceptionHandler(HttpClientErrorException.class)
+    protected ResponseEntity<HttpClientErrorException> handle(HttpClientErrorException e) {
         return new ResponseEntity<>(NOT_FOUND);
     }
 

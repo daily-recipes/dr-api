@@ -8,4 +8,4 @@
  */
 
 rootProject.name = 'daily-recipes'
-include 'recipes-api', 'personalinfo-api'
+include 'recipes-api'

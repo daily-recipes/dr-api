@@ -6,7 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import springfox.documentation.builders.HttpAuthenticationBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -17,7 +16,6 @@ import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = {"io.codextension.dr.repository"})
 public class DailyRecipesApiApplication extends SpringBootServletInitializer {
 
     private static final String AUTH_PROVIDER = "GoogleAuth";
