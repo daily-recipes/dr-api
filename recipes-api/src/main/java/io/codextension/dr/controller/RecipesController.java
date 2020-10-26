@@ -25,8 +25,8 @@ public class RecipesController {
     @ApiOperation(value = "GetRecipes", notes = "Get recipes filter by ingredient, or any additional properties", nickname = "GetRecipes")
     @ApiResponses(value = {@ApiResponse(code = 500, message = "Server error"),
             @ApiResponse(code = 404, message = "Service not found"),
-            @ApiResponse(code = 200, message = "Successful retrieval", response = Recipe.class, responseContainer = "List")})
-    @GetMapping(value = "/recipes}", produces = MediaType.APPLICATION_JSON_VALUE)
+            @ApiResponse(code = 200, message = "Successful retrieval")})
+    @GetMapping(value = "/recipes", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Map<String, Object>> getRecipes(@RequestParam(required = false, name = "m") @ApiParam(value = "memberId", required = true) String memberId)
             throws HttpClientErrorException.NotFound {
         try (Session session = driver.session()) {
