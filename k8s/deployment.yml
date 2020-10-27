@@ -22,39 +22,36 @@ spec:
           #image: 'elio2004/recipes-service:0.8'
           ports:
           - containerPort: 8081
-          resources:
-              limits:
-                memory: 1024Mi
-                cpu: "1"
+#          resources:
+#              limits:
+#                memory: 1024Mi
+#                cpu: "1"
           securityContext:
             privileged: false
           imagePullPolicy: Always
-          envFrom:
-            - configMapRef:
-                name: db-config
           env:
           - name: server.port
             value: "8081"
-          - name: spring.datasource.username
+          - name: org.neo4j.driver.uri
             valueFrom:
               secretKeyRef:
-                name: db-config-access
-                key: spring.datasource.username
-          - name: spring.datasource.password
+                name: neo4j-access
+                key: org.neo4j.driver.uri
+          - name: org.neo4j.driver.authentication.username
             valueFrom:
               secretKeyRef:
-                name: db-config-access
-                key: spring.datasource.password
-          - name: spring.security.oauth2.client.registration.google.client-id
+                name: neo4j-access
+                key: org.neo4j.driver.authentication.username
+          - name: org.neo4j.driver.authentication.password
+            valueFrom:
+              secretKeyRef:
+                name: neo4j-access
+                key: org.neo4j.driver.authentication.password
+          - name: security.oauth2.resource.id
             valueFrom:
               secretKeyRef:
                 name: svc-auth-config
-                key: spring.security.oauth2.client.registration.google.client-id
-          - name: spring.security.oauth2.client.registration.google.client-secret
-            valueFrom:
-              secretKeyRef:
-                name: svc-auth-config
-                key: spring.security.oauth2.client.registration.google.client-secret
+                key: security.oauth2.resource.id
           livenessProbe:
             httpGet:
               path: /manage/health/liveness
@@ -72,5 +69,5 @@ spec:
       initContainers:
         - name: init-backend
           image: busybox
-          command: ['sh', '-c', 'until nslookup postgres; do echo waiting for postgres; sleep 2; done;']
+          command: ['sh', '-c', 'until nslookup neo4j-bolt; do echo waiting for neo4j-bolt; sleep 2; done;']
       restartPolicy: Always

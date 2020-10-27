@@ -1,0 +1,15 @@
+# gcloud compute addresses create yalla-static-ip --global
+kind: Ingress
+apiVersion: networking.k8s.io/v1beta1
+metadata:
+  name: recipes-api-yalla
+  namespace: daily-recipes
+  labels:
+    k8s-app: recipes-api
+  annotations:
+    networking.gke.io/managed-certificates: "yalla-cert"
+    kubernetes.io/ingress.global-static-ip-name: "yalla-static-ip"
+spec:
+  backend:
+    serviceName: recipes-api
+    servicePort: 8081

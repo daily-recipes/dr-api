@@ -5,4 +5,4 @@ metadata:
   namespace: daily-recipes
 type: Opaque
 stringData:
-  security.oauth2.resource.id: xxx
+  security.oauth2.resource.id: 699776631242-cukc3jiffjjqlu8urcfjfp9n0h8kspau.apps.googleusercontent.com
