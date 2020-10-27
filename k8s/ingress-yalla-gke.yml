@@ -7,9 +7,21 @@ metadata:
   labels:
     k8s-app: recipes-api
   annotations:
-    networking.gke.io/managed-certificates: "yalla-cert"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    acme.cert-manager.io/http01-edit-in-place: "true"
     kubernetes.io/ingress.global-static-ip-name: "yalla-static-ip"
+    kubernetes.io/ingress.allow-http: "false"
 spec:
-  backend:
-    serviceName: recipes-api
-    servicePort: 8081
+  tls:
+  - hosts:
+    - recipes.yalla.run
+    secretName: recipes-tls-secret
+  rules:
+  - host: recipes.yalla.run
+    http:
+      paths:
+      - backend:
+          serviceName: recipes-api
+          servicePort: 8081
+        path: /*
+#https://kosyfrances.github.io/ingress-gce-letsencrypt/
