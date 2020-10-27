@@ -18,8 +18,8 @@ spec:
     spec:
       containers:
         - name: recipes-api
-          image: 'pc:5000/recipes-service:0.8'
-          #image: 'elio2004/recipes-service:0.8'
+          #image: 'pc:5000/recipes-service:0.8'
+          image: 'elio2004/recipes-service:0.8'
           ports:
           - containerPort: 8081
 #          resources:
@@ -50,7 +50,7 @@ spec:
           - name: security.oauth2.resource.id
             valueFrom:
               secretKeyRef:
-                name: svc-auth-config
+                name: oauth-config
                 key: security.oauth2.resource.id
           livenessProbe:
             httpGet:
