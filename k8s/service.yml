@@ -6,9 +6,10 @@ metadata:
   labels:
     k8s-app: recipes-api
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - protocol: TCP
       port: 8081
+      targetPort: 8081
   selector:
     k8s-app: recipes-api

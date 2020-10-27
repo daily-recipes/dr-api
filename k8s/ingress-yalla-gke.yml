@@ -1,6 +1,6 @@
 # gcloud compute addresses create yalla-static-ip --global
 kind: Ingress
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: extensions/v1beta1
 metadata:
   name: recipes-api-yalla
   namespace: daily-recipes
