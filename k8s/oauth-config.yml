@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: oauth-config
-  namespace: daily-recipes
-type: Opaque
-stringData:
-  security.oauth2.resource.id: 699776631242-cukc3jiffjjqlu8urcfjfp9n0h8kspau.apps.googleusercontent.com
